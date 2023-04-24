@@ -13,7 +13,6 @@ beforeEach(()=> {
         [todolistID1]: [
             {id: '1', title: 'HTML&CSS', isDone: true},
             {id: '2', title: 'JS', isDone: true},
-            {id: '2', title: 'JS', isDone: true},
             {id: '3', title: 'ReactJS', isDone: false},
             {id: '4', title: 'Rest API', isDone: false},
             {id: '5', title: 'GraphQL', isDone: false},
@@ -65,7 +64,7 @@ test('correct task should be changed tittle', () => {
 
 test('correct should be changed status of the task ', () => {
 
-    const action = changeToggleTaskAC(todolistID1, '3', false)
+    const action = changeToggleTaskAC(todolistID1, '3', true)
     const endState: TasksStateType = tasksReducer(startState, action);
 
     expect(endState[todolistID1].length).toBe(5)
@@ -100,4 +99,6 @@ test('property with todolistId should be deleted ', () => {
     expect(keys.length).toBe(1)
     expect(endState[todolistID2]).toBeUndefined()
 });
+
+
 
