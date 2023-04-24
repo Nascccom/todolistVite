@@ -13,6 +13,7 @@ import {
 } from "../../store/reducers/todolistReducer/todolists-reducer";
 import {AppRootStateType} from "../../store/store";
 import {Task} from "../Task/Task";
+import {EditableSpan} from "../EditableSpan/EditableSpan";
 
 type PropsType = {
     todolistId: string
@@ -62,8 +63,8 @@ export const Todolist = memo((props: PropsType) => {
     return (
       <div>
           <h3>
-              {/*<EditableSpan title={props.title}*/}
-              {/*              callBack={updateTodolistHandler}/>*/}
+              <EditableSpan title={props.title}
+                            callBack={updateTodolistHandler}/>
 
               <IconButton aria-label="delete"
                           onClick={deleteAllTodolistHandler}>
