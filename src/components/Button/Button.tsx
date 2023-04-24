@@ -1,4 +1,4 @@
-import React, {memo, useCallback} from 'react';
+import React, {memo} from 'react';
 import {Button} from '@mui/material';
 
 
@@ -14,12 +14,12 @@ type ButtonType = {
 
 export const ButtonComponent = memo((props: ButtonType) => {
 
-    const onclickButtonHandler = useCallback(() => {
+    const clickButtonHandler = () => {
         props.callBack()
-    }, [props.callBack])
+    }
 
     return (
-      <Button onClick={onclickButtonHandler}
+      <Button onClick={clickButtonHandler}
               color={props.color}
               size={props.size}
               variant={props.variant}

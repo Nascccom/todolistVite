@@ -1,10 +1,6 @@
 import {v1} from 'uuid';
 
-export const todoId = v1()
-
-const initialState: TodolistType[] = [
-    {id: todoId, title: 'string', filter: "all"}
-]
+const initialState: TodolistType[] = []
 
 export const todolistsReducer = (state: TodolistType[] = initialState, action: TodolistsReducerActionType): TodolistType[] => {
     switch (action.type) {

@@ -1,8 +1,7 @@
 import {v1} from "uuid";
-import {AddTodolistACType, RemoveTodolistACType, todoId} from "../todolistReducer/todolists-reducer";
+import {AddTodolistACType, RemoveTodolistACType} from "../todolistReducer/todolists-reducer";
 
 const initialState: TasksStateType = {
-    [todoId]: [{id: 'fdf', title: 'Js', isDone: true}],
 }
 
 
