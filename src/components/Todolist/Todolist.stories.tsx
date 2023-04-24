@@ -1,52 +1,66 @@
-import React, {memo, useCallback, useState} from 'react';
-import DeleteIcon from '@mui/icons-material/Delete';
-import IconButton from '@mui/material/IconButton';
+import type {Meta, StoryObj} from '@storybook/react';
+import {Todolist} from "./Todolist";
+import {ReduxStoreDecorator} from "../../store/ReduxStoreDecorator/ReduxStoreDecorator";
 import {useDispatch, useSelector} from "react-redux";
-import {InputLine} from "../InputLine/InputLine";
+import {AppRootStateType} from "../../store/store";
 import {addTaskAC, TaskType} from "../../store/reducers/taskReducer/task-reducer";
-import {ButtonComponent} from "../Button/Button";
+import React, {useState} from "react";
 import {
     changeFilterAC,
     changeTitleTodolistAC,
     FilterValuesType,
     removeTodolistAC
 } from "../../store/reducers/todolistReducer/todolists-reducer";
-import {AppRootStateType} from "../../store/store";
 import {Task} from "../Task/Task";
 import {EditableSpan} from "../EditableSpan/EditableSpan";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
+import {InputLine} from "../InputLine/InputLine";
+import {ButtonComponent} from "../Button/Button";
+import {action} from "@storybook/addon-actions";
 
-export type PropsType = {
-    todolistId: string
-    title: string
-    activeFilter: FilterValuesType
+
+const meta: Meta<typeof Todolist> = {
+    title: 'TODOLISTS/Todolist',
+    component: Todolist,
+    tags: ['autodocs'],
+    decorators: [ReduxStoreDecorator],
+
 }
 
-export const Todolist = memo((props: PropsType) => {
+export default meta;
+type Story = StoryObj<typeof Todolist>;
 
-    const tasks = useSelector<AppRootStateType, TaskType[]>(state => state.tasks[props.todolistId])
+type ReduxTodolistType = {
+    todolistId: string
+    title: string
+}
+
+const ReduxTodolist = ({todolistId, title}: ReduxTodolistType) => {
+    const tasks = useSelector<AppRootStateType, TaskType[]>(state => state.tasks[todolistId])
     const dispatch = useDispatch()
     const [activeButton, setActiveButton] = useState<FilterValuesType>('All')
 
-    const changeFilterButtonHandler = useCallback((todolistID: string, filterValue: FilterValuesType) => {
+    const changeFilterButtonHandler = (todolistID: string, filterValue: FilterValuesType) => {
         dispatch(changeFilterAC(todolistID, filterValue))
         setActiveButton(filterValue)
-    }, [dispatch])
+    }
 
-    const deleteAllTodolistHandler = useCallback(() => {
-        dispatch(removeTodolistAC(props.todolistId))
-    }, [dispatch, props.todolistId])
+    const deleteAllTodolistHandler = () => {
+        dispatch(removeTodolistAC(todolistId))
+    }
 
-    const addTaskForTodolistHandler = useCallback((valueTitle: string) => {
-        dispatch(addTaskAC(props.todolistId, valueTitle))
-    }, [dispatch, props.todolistId])
+    const addTaskForTodolistHandler = (valueTitle: string) => {
+        dispatch(addTaskAC(todolistId, valueTitle))
+    }
 
-    const updateTodolistHandler = useCallback((newTitleTodo: string) => {
-        dispatch(changeTitleTodolistAC(props.todolistId, newTitleTodo))
-    }, [dispatch, props.todolistId])
+    const updateTodolistHandler = (newTitleTodo: string) => {
+        dispatch(changeTitleTodolistAC(todolistId, newTitleTodo))
+    }
 
     const filteredTasks = (): TaskType[] => {
         let tasksForTodolist;
-        switch (props.activeFilter) {
+        switch (activeButton) {
             case 'Active':
                 return tasksForTodolist = tasks.filter(t => !t.isDone);
             case 'Completed':
@@ -58,16 +72,16 @@ export const Todolist = memo((props: PropsType) => {
 
     const mappedTasks = filteredTasks().map(t => <Task key={t.id}
                                                        task={t}
-                                                       todolistId={props.todolistId}/>)
+                                                       todolistId={todolistId}/>)
 
     return (
       <div>
           <h3>
-              <EditableSpan title={props.title}
+              <EditableSpan title={title}
                             callBack={updateTodolistHandler}/>
 
               <IconButton aria-label="delete"
-                          onClick={deleteAllTodolistHandler}>
+                          onClick={action('Removed Todolist')}>
                   <DeleteIcon/>
               </IconButton>
           </h3>
@@ -81,16 +95,20 @@ export const Todolist = memo((props: PropsType) => {
               <ButtonComponent buttonName={'All'}
                                variant={activeButton === 'All' ? 'outlined' : "text"}
                                color="secondary"
-                               callBack={() => changeFilterButtonHandler(props.todolistId, 'All')}/>
+                               callBack={() => setActiveButton('all')}/>
               <ButtonComponent buttonName={'Active'}
                                variant={activeButton === 'Active' ? 'outlined' : "text"}
                                color="success"
-                               callBack={() => changeFilterButtonHandler(props.todolistId, 'Active')}/>
+                               callBack={() => setActiveButton('Active')}/>
               <ButtonComponent buttonName={'Completed'}
                                variant={activeButton === 'Completed' ? 'outlined' : "text"}
                                color="error"
-                               callBack={() => changeFilterButtonHandler(props.todolistId, 'Completed')}/>
+                               callBack={() => setActiveButton('Completed')}/>
           </div>
       </div>
     )
-})
+}
+
+export const TodolistStory: Story = {
+    render: () => <ReduxTodolist todolistId={'todolistId1'} title={'My hobbies'}/>,
+};

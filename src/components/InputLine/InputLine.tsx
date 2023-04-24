@@ -66,8 +66,6 @@ export const InputLine = memo((props: PropsType) => {
                                                 buttonName={'+'}
                                                 callBack={addTaskHandler}/>}
           />
-
-
       </div>
     );
 });

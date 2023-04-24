@@ -6,8 +6,8 @@ type ButtonType = {
     buttonName: string
     callBack: () => void
     color?: 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning'
-    size?:  "small" | "medium" | "large"
-    variant?:  "text" | "outlined" | "contained"
+    size?: "small" | "medium" | "large"
+    variant?: "text" | "outlined" | "contained"
     startIcon?: React.ReactNode
     style?: object
 }

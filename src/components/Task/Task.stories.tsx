@@ -22,6 +22,9 @@ const meta: Meta<typeof Task> = {
         docs: {
             canvas: { sourceState: 'shown' },
         }
+    },
+    argTypes: {
+
     }
 
 }
