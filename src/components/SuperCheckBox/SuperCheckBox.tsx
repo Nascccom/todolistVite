@@ -1,4 +1,5 @@
 import React, {ChangeEvent, memo} from 'react';
+import Checkbox from "@mui/material/Checkbox";
 
 type SuperCheckBoxType = {
     callBack: (checked: boolean) => void
@@ -7,15 +8,9 @@ type SuperCheckBoxType = {
 
 export const SuperCheckBox = memo((props: SuperCheckBoxType) => {
 
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        props.callBack(e.currentTarget.checked)
-    }
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => props.callBack(e.currentTarget.checked)
 
-    return (
-      <input type="checkbox"
-             onChange={onChangeHandler}
-             checked={props.checked}
-      />
-
-    );
+    return <Checkbox checked={props.checked}
+                     onChange={onChangeHandler}
+                     color="success"/>
 });

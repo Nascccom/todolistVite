@@ -1,4 +1,4 @@
-import React, {memo} from 'react';
+import React, {memo, useCallback} from 'react';
 import {Button} from '@mui/material';
 
 
@@ -13,10 +13,9 @@ type ButtonType = {
 }
 
 export const ButtonComponent = memo((props: ButtonType) => {
-
-    const clickButtonHandler = () => {
+    const clickButtonHandler = useCallback(() => {
         props.callBack()
-    }
+    }, [props.callBack])
 
     return (
       <Button onClick={clickButtonHandler}
@@ -24,6 +23,7 @@ export const ButtonComponent = memo((props: ButtonType) => {
               size={props.size}
               variant={props.variant}
               style={props.style}
+              sx={{'css-1koxnt2-MuiButtonGroup-root': {border: 'none'}}}
               startIcon={props.startIcon}
       >
           {props.buttonName}

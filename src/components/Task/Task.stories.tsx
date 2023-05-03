@@ -4,7 +4,7 @@ import {ReduxStoreDecorator} from "../../store/ReduxStoreDecorator/ReduxStoreDec
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {changeToggleTaskAC, removeTaskAC, TaskType, updateTaskAC} from "../../store/reducers/taskReducer/task-reducer";
-import styles from "../Todolist/Todolist.module.css";
+import styles from "./Task.module.css";
 import {SuperCheckBox} from "../SuperCheckBox/SuperCheckBox";
 import {EditableSpan} from "../EditableSpan/EditableSpan";
 import IconButton from "@mui/material/IconButton";
