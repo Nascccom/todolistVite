@@ -18,6 +18,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import {InputLine} from "../InputLine/InputLine";
 import {ButtonComponent} from "../Button/Button";
 import {action} from "@storybook/addon-actions";
+import ButtonGroup from "@mui/material/ButtonGroup";
 
 
 const meta: Meta<typeof Todolist> = {
@@ -91,20 +92,23 @@ const ReduxTodolist = ({todolistId, title}: ReduxTodolistType) => {
               {mappedTasks}
           </ul>
 
-          <div>
+          <ButtonGroup size="large" variant="text" aria-label="large outlined button group" sx={{
+              display: "flex",
+              justifyContent: "flex-start",
+              ".MuiButtonGroup-grouped:not(:last-of-type)": {
+                  border: 'none',
+              }
+          }}>
               <ButtonComponent buttonName={'All'}
-                               variant={activeButton === 'All' ? 'outlined' : "text"}
-                               color="secondary"
-                               callBack={() => setActiveButton('all')}/>
+                               color={activeButton === 'All' ? 'success' : "secondary"}
+                               callBack={() => changeFilterButtonHandler(todolistId, 'All')}/>
               <ButtonComponent buttonName={'Active'}
-                               variant={activeButton === 'Active' ? 'outlined' : "text"}
-                               color="success"
-                               callBack={() => setActiveButton('Active')}/>
+                               color={activeButton === 'Active' ? 'success' : "secondary"}
+                               callBack={() => changeFilterButtonHandler(todolistId, 'Active')}/>
               <ButtonComponent buttonName={'Completed'}
-                               variant={activeButton === 'Completed' ? 'outlined' : "text"}
-                               color="error"
-                               callBack={() => setActiveButton('Completed')}/>
-          </div>
+                               color={activeButton === 'Completed' ? 'success' : "secondary"}
+                               callBack={() => changeFilterButtonHandler(todolistId, 'Completed')}/>
+          </ButtonGroup>
       </div>
     )
 }
