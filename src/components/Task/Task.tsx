@@ -2,37 +2,37 @@ import React, {memo, useCallback} from 'react';
 import styles from './Task.module.css'
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {useDispatch} from "react-redux";
-import {changeToggleTaskAC, removeTaskAC, TaskType, updateTaskAC} from "../../store/reducers/taskReducer/task-reducer";
 import {EditableSpan} from "../EditableSpan/EditableSpan";
 import {SuperCheckBox} from "../SuperCheckBox/SuperCheckBox";
+import {TaskType} from "../../api/tasks -api/tasks-api";
+import {useAppDispatch} from "../../hooks/useDispatch/useDispatch";
 
 export type TaskPropsType = {
     task: TaskType
     todolistId: string
 }
 
-export const Task = memo((props: TaskPropsType) => {
-    const dispatch = useDispatch()
+export const Task = memo(({task, todolistId}: TaskPropsType) => {
+    const dispatch = useAppDispatch()
 
     const removeTaskHandler = useCallback(() => {
-        dispatch(removeTaskAC(props.todolistId, props.task.id))
-    }, [dispatch, props.todolistId, props.task.id])
+        //  dispatch(removeTaskAC(props.todolistId, props.task.id))
+    }, [dispatch, todolistId, task.id])
 
     const updateTaskTitleHandler = useCallback((newTitle: string) => {
-        dispatch(updateTaskAC(props.todolistId,props.task.id, newTitle))
-    }, [dispatch, props.todolistId, props.task.id])
+        //  dispatch(updateTaskAC(props.todolistId,props.task.id, newTitle))
+    }, [dispatch, todolistId, task.id])
 
     const changeCheckboxStatus = useCallback((checked: boolean) => {
-        dispatch(changeToggleTaskAC(props.todolistId, props.task.id, checked))
-    }, [ dispatch, props.todolistId, props.task.id])
+        //   dispatch(changeToggleTaskAC(props.todolistId, props.task.id, checked))
+    }, [dispatch, todolistId, task.id])
 
     return (
-      <li className={props.task.isDone ? styles.isDoneTask : ''}>
+      <li className={task.completed ? styles.isDoneTask : ''}>
           <SuperCheckBox callBack={(checked) => changeCheckboxStatus(checked)}
-                         checked={props.task.isDone}/>
+                         checked={task.completed}/>
 
-          <EditableSpan title={props.task.title}
+          <EditableSpan title={task.title}
                         callBack={updateTaskTitleHandler}/>
 
           <IconButton aria-label="delete"

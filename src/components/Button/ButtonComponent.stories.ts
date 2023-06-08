@@ -3,7 +3,7 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {ButtonComponent} from './Button';
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction
-const meta = {
+const meta : Meta<typeof ButtonComponent> = {
     title: 'TODOLISTS/Button',
     component: ButtonComponent,
     tags: ['autodocs'],
@@ -16,7 +16,7 @@ const meta = {
         buttonName: 'Button',
 
     },
-} satisfies Meta<typeof ButtonComponent>;
+} ;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

@@ -1,22 +1,25 @@
-import {useCallback} from 'react'
+import {useCallback, useEffect} from 'react'
 import './App.css'
-import {useSelector, useDispatch} from 'react-redux'
-import {AppRootStateType} from "./store/store";
-import {addTodolistAC, TodolistType} from "./store/reducers/todolistReducer/todolists-reducer";
 import Container from '@mui/system/Container';
 import {ButtonAppBar} from "./components/ButtonAppBar/ButtonAppBar";
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import {InputLine} from "./components/InputLine/InputLine";
 import {Todolist} from "./components/Todolist/Todolist";
-
+import {useAppSelector} from "./hooks/useSelector/useSelector";
+import {useAppDispatch} from "./hooks/useDispatch/useDispatch";
+import {getTodolistsTC, TodolistDomainType} from "./store/reducers/todolistReducer/todolists-reducer";
 
 function App() {
-    const todolist = useSelector<AppRootStateType, TodolistType[]>(state => state.todolists)
-    const dispatch = useDispatch()
+    const todolists = useAppSelector<TodolistDomainType[]>(state => state.todolists)
+    const dispatch = useAppDispatch()
+
+    useEffect(() => {
+        dispatch(getTodolistsTC())
+    }, [])
 
     const addTodolist = useCallback((title: string) => {
-        dispatch(addTodolistAC(title))
+        // dispatch(addTodolistAC(title))
     }, [dispatch])
 
     return (
@@ -30,15 +33,17 @@ function App() {
               <Grid container spacing={5} sx={{justifyContent: 'center', marginTop: "20px"}}>
 
                   {
-                      todolist.map(t => {
+                      todolists.map(todo => {
+
                           return (
-                            <Grid item key={t.id}>
+                            <Grid item key={todo.id}>
                                 <Paper style={{padding: '10px'}}>
-                                    <Todolist
-                                      todolistId={t.id}
-                                      title={t.title}
-                                      activeFilter={t.filter}
+
+                                    <Todolist todolistId={todo.id}
+                                              title={todo.title}
+                                              activeFilter={todo.filter}
                                     />
+
                                 </Paper>
                             </Grid>
                           )
