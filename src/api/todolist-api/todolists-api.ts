@@ -7,8 +7,8 @@ export const todolistsAPI = {
     createTodolist(title: string) {
         return instance.post<ResponseType<{ item: TodolistType }>>('todo-lists', {title})
     },
-    updateTodolist(todolistId: string, newTitle: string) {
-        return instance.put<ResponseType>(`todo-lists/${todolistId}`, {newTitle})
+    updateTodolistTittle(todolistId: string, title: string) {
+        return instance.put<ResponseType>(`todo-lists/${todolistId}`, {title})
     },
     removeTodolist(todolistId: string) {
         return instance.delete<ResponseType>(`todo-lists/${todolistId}`)

@@ -8,7 +8,7 @@ import {InputLine} from "./components/InputLine/InputLine";
 import {Todolist} from "./components/Todolist/Todolist";
 import {useAppSelector} from "./hooks/useSelector/useSelector";
 import {useAppDispatch} from "./hooks/useDispatch/useDispatch";
-import {getTodolistsTC, TodolistDomainType} from "./store/reducers/todolistReducer/todolists-reducer";
+import {addTodolistTC, getTodolistsTC, TodolistDomainType} from "./store/reducers/todolistReducer/todolists-reducer";
 
 function App() {
     const todolists = useAppSelector<TodolistDomainType[]>(state => state.todolists)
@@ -19,7 +19,7 @@ function App() {
     }, [])
 
     const addTodolist = useCallback((title: string) => {
-        // dispatch(addTodolistAC(title))
+        dispatch(addTodolistTC(title))
     }, [dispatch])
 
     return (
