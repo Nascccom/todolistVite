@@ -3,17 +3,11 @@ import {todolistsReducer} from "./reducers/todolistReducer/todolists-reducer";
 import {configureStore} from "@reduxjs/toolkit";
 
 
-// const rootReducer = combineReducers({
-//     todolists: todolistsReducer,
-//     tasks: tasksReducer
-// })
-
 export const store = configureStore({
     reducer: {
         todolists: todolistsReducer.reducer,
         tasks: tasksReducer.reducer
     },
-
 })
 
 // export type ActionType = TasksReducerActionType

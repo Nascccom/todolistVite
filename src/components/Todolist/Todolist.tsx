@@ -2,17 +2,19 @@ import React, {memo, useCallback, useEffect, useState} from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import {InputLine} from "../InputLine/InputLine";
-import {getTasksTC} from "../../store/reducers/taskReducer/task-reducer";
+import {addTasksTC, getTasksTC} from "../../store/reducers/taskReducer/task-reducer";
 import {ButtonComponent} from "../Button/Button";
 import {
     changeTodolistFilter,
-    changeTodolistTitleTC, FilterValuesType, removeTodolistTC,
+    changeTodolistTitleTC,
+    FilterValuesType,
+    removeTodolistTC,
 } from "../../store/reducers/todolistReducer/todolists-reducer";
 import {Task} from "../Task/Task";
 import {EditableSpan} from "../EditableSpan/EditableSpan";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import {useAppDispatch} from "../../hooks/useDispatch/useDispatch";
-import {TaskType} from "../../api/tasks -api/tasks-api";
+import {TaskStatuses, TaskType} from "../../api/tasks -api/tasks-api";
 import {useAppSelector} from "../../hooks/useSelector/useSelector";
 
 type PropsType = {
@@ -41,7 +43,7 @@ export const Todolist = memo(({todolistId, title, activeFilter}: PropsType) => {
     }, [dispatch, todolistId])
 
     const addTaskForTodolistHandler = useCallback((valueTitle: string) => {
-        // dispatch(addTaskAC(props.todolistId, valueTitle))
+        dispatch(addTasksTC(todolistId, valueTitle))
     }, [dispatch, todolistId])
 
     const updateTodolistTitleHandler = useCallback((newTitleTodo: string) => {
@@ -51,9 +53,9 @@ export const Todolist = memo(({todolistId, title, activeFilter}: PropsType) => {
     const filteredTasks = () => {
         switch (activeFilter) {
             case 'Active':
-                return tasks.filter(t => !t.completed);
+                return tasks.filter(t => t.status === TaskStatuses.New);
             case 'Completed':
-                return tasks.filter(t => t.completed);
+                return tasks.filter(t => t.status === TaskStatuses.Completed);
             default:
                 return tasks;
         }

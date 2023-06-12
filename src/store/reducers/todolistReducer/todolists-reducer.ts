@@ -9,10 +9,12 @@ export const todolistsReducer = createSlice({
     // {id: todolistId1, title: 'What to buy', order: 0, filter: 'All', addedDate: ''}
     initialState: [] as TodolistDomainType[],
     reducers: {
-        removeTodolist: (state, action: PayloadAction<{ todolistId: string }>) => {
+        removeTodolist: (state,
+                         action: PayloadAction<{ todolistId: string }>) => {
             return state.filter(todo => todo.id !== action.payload.todolistId);
         },
-        addTodolist: (state, action: PayloadAction<{ todolist: TodolistType }>) => {
+        addTodolist: (state,
+                      action: PayloadAction<{ todolist: TodolistType }>) => {
             const todoWithFilter: TodolistDomainType = {
                 ...action.payload.todolist,
                 filter: 'All'
@@ -31,7 +33,8 @@ export const todolistsReducer = createSlice({
               ? {...el, filter: action.payload.filterValue}
               : el)
         },
-        setTodolists: (state, action: PayloadAction<TodolistType[]>) => {
+        setTodolists: (state,
+                       action: PayloadAction<TodolistType[]>) => {
             return action.payload.map((todo: TodolistType) => ({...todo, filter: 'All'}))
         }
     }
@@ -74,7 +77,6 @@ export const changeTodolistTitleTC = (todolistId: string, newTitle: string) => (
     todolistsAPI.updateTodolistTittle(todolistId, newTitle)
       .then(res => {
           if (res.data.resultCode === 0) {
-              console.log(res.data)
               dispatch(changeTodolistTitle({todolistId, newTitle}))
           }
       })
