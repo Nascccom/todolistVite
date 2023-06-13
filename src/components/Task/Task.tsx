@@ -13,7 +13,6 @@ export type TaskPropsType = {
     todolistId: string
 }
 
-
 export const Task = memo(({task, todolistId}: TaskPropsType) => {
     const dispatch = useAppDispatch()
 

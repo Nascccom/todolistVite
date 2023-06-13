@@ -1,16 +1,15 @@
 import type {Meta, StoryObj} from '@storybook/react';
 import {Task} from "./Task";
 import {ReduxStoreDecorator} from "../../store/ReduxStoreDecorator/ReduxStoreDecorator";
-import React from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {changeToggleTaskAC, removeTaskAC, TaskType, updateTaskAC} from "../../store/reducers/taskReducer/task-reducer";
+import React, {useState} from "react";
 import styles from "./Task.module.css";
 import {SuperCheckBox} from "../SuperCheckBox/SuperCheckBox";
 import {EditableSpan} from "../EditableSpan/EditableSpan";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {AppRootStateType} from "../../store/store";
 import {action} from '@storybook/addon-actions';
+import {TaskStatuses, TaskType} from "../../api/tasks -api/tasks-api";
+import {useAppSelector} from "../../hooks/useSelector/useSelector";
 
 
 const meta: Meta<typeof Task> = {
@@ -20,13 +19,9 @@ const meta: Meta<typeof Task> = {
     decorators: [ReduxStoreDecorator],
     parameters: {
         docs: {
-            canvas: { sourceState: 'shown' },
+            canvas: {sourceState: 'shown'},
         }
     },
-    argTypes: {
-
-    }
-
 }
 
 export default meta;
@@ -34,49 +29,43 @@ type Story = StoryObj<typeof Task>;
 
 type TaskReduxType = {
     todolistId: string
-    callback?: () => void
 }
 
-const TaskRedux = ({todolistId, callback}: TaskReduxType) => {
-    const task = useSelector<AppRootStateType, TaskType>(
-      state => state.tasks[todolistId][1])
-    const dispatch = useDispatch()
 
-    const removeTaskHandler = () => {
-        dispatch(removeTaskAC(todolistId, task.id))
-    }
+const TaskRedux = ({todolistId}: TaskReduxType) => {
+    const task = useAppSelector<TaskType>(state => state.tasks[todolistId][1])
+    const [status, setStatus] = useState(TaskStatuses.New)
 
-    const updateTaskTitleHandler = (newTitle: string) => {
-        dispatch(updateTaskAC(todolistId, task.id, newTitle))
-    }
-
-    const changeCheckboxStatus = (checked: boolean) => {
-        dispatch(changeToggleTaskAC(todolistId, task.id, checked))
+    const changeCheckboxStatus = () => {
+        if (status === TaskStatuses.Completed) {
+            setStatus(TaskStatuses.New)
+        } else {
+            setStatus(TaskStatuses.Completed)
+        }
     }
 
     return (
-      <li className={task.isDone ? styles.isDone : ''}>
-          <SuperCheckBox callBack={(checked) => changeCheckboxStatus(checked)}
-                         checked={task.isDone}/>
+      <li className={status === TaskStatuses.Completed ? styles.isDoneTask : ''}>
+          <SuperCheckBox
+            callBack={changeCheckboxStatus}
+            checked={status === TaskStatuses.Completed}/>
 
           <EditableSpan title={task.title}
-                        callBack={updateTaskTitleHandler}/>
-
+                        callBack={action('Tasks\'s title was changing')}/>
           <IconButton aria-label="delete"
-                      onClick={callback}>
+                      onClick={action('Task Removed')}>
               <DeleteIcon/>
           </IconButton>
       </li>
     )
 }
 
-
 export const TaskIsDone: Story = {
-    render: () => <TaskRedux todolistId={'todolistId2'} callback={action('Task Removed')} />,
+    render: () => <TaskRedux todolistId={'todolistId2'} />,
 };
 
 export const TaskNotIsDone: Story = {
-    render: () => <TaskRedux todolistId={'todolistId1'} callback={action('Task Removed')} />,
+    render: () => <TaskRedux todolistId={'todolistId1'}  />,
 };
 
 

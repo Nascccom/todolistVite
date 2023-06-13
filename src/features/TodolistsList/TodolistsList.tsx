@@ -2,8 +2,8 @@ import {useAppSelector} from "../../hooks/useSelector/useSelector";
 import {addTodolistTC, TodolistDomainType} from "../../store/reducers/todolistReducer/todolists-reducer";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import {Todolist} from "../Todolist/Todolist";
-import {InputLine} from "../InputLine/InputLine";
+import {Todolist} from "./Todolist/Todolist";
+import {InputLine} from "../../components/InputLine/InputLine";
 import React, {useCallback} from "react";
 import {useAppDispatch} from "../../hooks/useDispatch/useDispatch";
 

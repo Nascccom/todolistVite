@@ -1,21 +1,21 @@
 import React, {memo, useCallback, useEffect, useState} from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
-import {InputLine} from "../InputLine/InputLine";
-import {addTasksTC, getTasksTC} from "../../store/reducers/taskReducer/task-reducer";
-import {ButtonComponent} from "../Button/Button";
+import {InputLine} from "../../../components/InputLine/InputLine";
+import {addTasksTC, getTasksTC} from "../../../store/reducers/taskReducer/task-reducer";
+import {ButtonComponent} from "../../../components/Button/Button";
 import {
     changeTodolistFilter,
     changeTodolistTitleTC,
     FilterValuesType,
     removeTodolistTC,
-} from "../../store/reducers/todolistReducer/todolists-reducer";
-import {Task} from "../Task/Task";
-import {EditableSpan} from "../EditableSpan/EditableSpan";
+} from "../../../store/reducers/todolistReducer/todolists-reducer";
+import {Task} from "../../../components/Task/Task";
+import {EditableSpan} from "../../../components/EditableSpan/EditableSpan";
 import ButtonGroup from "@mui/material/ButtonGroup";
-import {useAppDispatch} from "../../hooks/useDispatch/useDispatch";
-import {TaskStatuses, TaskType} from "../../api/tasks -api/tasks-api";
-import {useAppSelector} from "../../hooks/useSelector/useSelector";
+import {useAppDispatch} from "../../../hooks/useDispatch/useDispatch";
+import {TaskStatuses, TaskType} from "../../../api/tasks -api/tasks-api";
+import {useAppSelector} from "../../../hooks/useSelector/useSelector";
 
 type PropsType = {
     todolistId: string
@@ -97,7 +97,7 @@ export const Todolist = memo(({todolistId, title, activeFilter}: PropsType) => {
     )
 })
 
-const ButtonGroupStyle = {
+export const ButtonGroupStyle = {
     display: "flex",
     justifyContent: "space-between",
     ".MuiButtonGroup-grouped:not(:last-of-type)": {
